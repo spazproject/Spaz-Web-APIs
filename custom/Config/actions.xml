@@ -38,20 +38,6 @@
    </parameters>
   </action>
   <action>
-   <name>retrieve</name>
-   <enabled>1</enabled>
-   <public>1</public>
-   <description>Retrieve information about a certain URL</description>
-   <route>/url/retrieve</route>
-   <hash>2ace6e40cb50c4a261bb6383dc35a7385b9cff92</hash>
-   <parameters>
-    <parameter>
-     <name>url</name>
-     <required>1</required>
-    </parameter>
-   </parameters>
-  </action>
-  <action>
    <name>Resolve_url</name>
    <enabled>1</enabled>
    <public>1</public>
