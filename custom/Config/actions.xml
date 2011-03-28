@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frapi-config>
+ <actions>
+  <action>
+   <name>get_ip</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description>returns the public IP from the requesting machine</description>
+   <route>/ip</route>
+   <hash>6dbe4a97698ca4ca8f131d24bf6ca1028252dfbc</hash>
+  </action>
+  <action>
+   <name>get_url_info</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description>preview the contents of a URL in some way</description>
+   <route>/url/info</route>
+   <hash>8c66b851244c6fa5cf38de29966553adf675f9c5</hash>
+   <parameters>
+    <parameter>
+     <name>url</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>get_url_title</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description>Retrieves the Title of an HTML doc located at the URL, or the content type if not text/html</description>
+   <route>/url/title</route>
+   <hash>5ddaa774d91bac9611943023ed8e415a276459eb</hash>
+   <parameters>
+    <parameter>
+     <name>url</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>retrieve</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description>Retrieve information about a certain URL</description>
+   <route>/url/retrieve</route>
+   <hash>2ace6e40cb50c4a261bb6383dc35a7385b9cff92</hash>
+   <parameters>
+    <parameter>
+     <name>url</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>Resolve_url</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <route>/url/resolve</route>
+   <hash>b479cf97f39cc1f4124e688ca295464535ff0de1</hash>
+   <parameters>
+    <parameter>
+     <name>url</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>Get_time</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description></description>
+   <route>/time</route>
+   <hash>4fb012cb14ef39dd600e8eda39abba566beb8c0a</hash>
+   <parameters>
+    <parameter>
+     <name>tz</name>
+     <required>0</required>
+    </parameter>
+   </parameters>
+  </action>
+ </actions>
+</frapi-config>

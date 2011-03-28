@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frapi-config>
+ <errors>
+  <error>
+   <name>ERROR_GET_EXPECTED</name>
+   <message>Only a GET is expected for this API module</message>
+   <http_code>400</http_code>
+   <description>This error is returned whenever a module that only expects an HTTP GET receives anything else.</description>
+   <hash>2c76eee904496e2ff2687e1fe750cb0e32dab612</hash>
+  </error>
+  <error>
+   <name>ERROR_INSERTING_IMAGE</name>
+   <message>There was an unexpected error while inserting the new image in the cache</message>
+   <http_code>400</http_code>
+   <description>This error is returned when something wrong happened when saving to the couchdb database.</description>
+   <hash>34dc57e9845e4cfda20207fb41571fabd6720e6a</hash>
+  </error>
+  <error>
+   <name>ERROR_INVALID_URL</name>
+   <message>An invalid URL was submitted</message>
+   <http_code>400</http_code>
+   <description>This error is returned when the URL passed to the webservice is an invalid URL.</description>
+   <hash>36f40fea0eb63e1dfa0a5f1f60bba6230af6e5c0</hash>
+  </error>
+  <error>
+   <name>ERROR_NO_SUCH_IMAGE</name>
+   <message>No image found for that URL</message>
+   <http_code>404</http_code>
+   <description>This message is returned when no image was matched in the retrieval process.</description>
+   <hash>a6b24f8821425e9e23dbcf55e382fee31f879c91</hash>
+  </error>
+  <error>
+   <name>ERROR_RATE_LIMIT_EXCEEDED</name>
+   <message>You are only authorized to create a new thumbnail every minute. You currently hit the rate limit and this will go away in 60 seconds.</message>
+   <http_code>401</http_code>
+   <description>This error is returned when someone tries to access a new thumbnail in less than 1 minute within the rate limit.</description>
+   <hash>155738cfea766ea11fb26eaa8e9405c9ec522ef2</hash>
+  </error>
+  <error>
+   <name>NO_THUMB_FOR_THAT_URL</name>
+   <message>There was an error while making a thumbnail out of the supplied URL.</message>
+   <http_code>400</http_code>
+   <description>This error is returned when no image has been supplied back for that URL.</description>
+   <hash>fa40e7011e1c80db08e5d52613b06a94b6971467</hash>
+  </error>
+ </errors>
+</frapi-config>

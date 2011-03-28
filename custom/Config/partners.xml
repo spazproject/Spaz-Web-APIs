@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frapi-config>
+ <partners>
+  <partner>
+   <firstname>Ed</firstname>
+   <lastname>Finkler</lastname>
+   <email>coj@funkatron.com</email>
+   <company>poop</company>
+   <api_key>554479d31cd4fce24f9296399686ee4581eda4c3</api_key>
+   <hash>7684b698f0d45a970c96eb41530f068a99c81c9d</hash>
+  </partner>
+ </partners>
+</frapi-config>
