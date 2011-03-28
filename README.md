@@ -8,6 +8,9 @@ The code here is really just the `custom` directory from a [FRAPI](http://getfra
 
  * [Anything FRAPI requires](http://frapi.github.com/installing/index.html)
     * Currently, we're just using APC for caching. We may move to Memcached at some point, but not sure.
+ * [pecl_http](http://us.php.net/http)
+ * [libcurl extension](http://us.php.net/manual/en/book.curl.php)
+    * This may go away as we migrate to pecl_http
 
 ## Installing ##
 
