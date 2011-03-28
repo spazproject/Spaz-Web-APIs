@@ -6,9 +6,9 @@
 */
 class Spaz_Url
 {
-    
-    const MAX_REDIRECTS = 10;
-    
+	
+	const MAX_REDIRECTS = 10;
+	
 	public $data = array();
 	
 	protected $curl;
@@ -144,12 +144,12 @@ class Spaz_Url
 			$this->cache->add("info_".$url, $res);
 			$res['cached'] = false;
 		} else {
-    	    $res['cached'] = true;
-    	}
-    	
+			$res['cached'] = true;
+		}
+		
 		
 		return $res;
-    }
+	}
 
 
 	/**
@@ -159,7 +159,7 @@ class Spaz_Url
 	 */
 	public function getTitle($url)
 	{
-	    
+		
 		$url = $this->validate($url);
 
 		if (!$url) {
@@ -170,31 +170,31 @@ class Spaz_Url
 	
 		
 		$res = $this->cache->get("title_".$url);
-        if ($res === false) {
-		    $title = 'Could not retrieve title';
-		    
-		    $req = new \HttpRequest($url, \HttpRequest::METH_GET);
+		if ($res === false) {
+			$title = 'Could not retrieve title';
+			
+			$req = new \HttpRequest($url, \HttpRequest::METH_GET);
 			$req->setOptions(array('redirect' => self::MAX_REDIRECTS));
 			$req->setHeaders(array(
-			        'Range' => "bytes=0-1000"
-			    )
+					'Range' => "bytes=0-1000"
+				)
 			);
 			$req->send();
-		    
-		    $html = $req->getResponseBody();
-		    $status = $req->getResponseCode();	
-		    $type = $req->getResponseHeader('content-type');
-		    
-		    if ($status >= 200 && $status < 300 && $html && $type) {
-                if (preg_match("|<title>([^<]+)</title>|i", $html, $matches)) {
-                    $title = $matches[1];
-                }
-		    }
+			
+			$html = $req->getResponseBody();
+			$status = $req->getResponseCode();	
+			$type = $req->getResponseHeader('content-type');
+			
+			if ($status >= 200 && $status < 300 && $html && $type) {
+				if (preg_match("|<title>([^<]+)</title>|i", $html, $matches)) {
+					$title = $matches[1];
+				}
+			}
 
 			$res = array('title'=>$title, 'cached'=>false);
 			$this->cache->add("title_".$url, $res);
 		} else {
-		    $res['cached'] = true;
+			$res['cached'] = true;
 		}
 
 		
