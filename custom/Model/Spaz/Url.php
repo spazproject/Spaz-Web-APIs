@@ -6,10 +6,16 @@
 */
 class Spaz_Url
 {
+    
+    const MAX_REDIRECTS = 10;
+    
 	public $data = array();
+	
+	protected $curl;
 	
 	function __construct() {
 		$this->cache = Frapi_Cache::getInstance('apc');
+		
 		$this->curl = curl_init();
 	}
 	
@@ -54,7 +60,7 @@ class Spaz_Url
 
 		try {
 			$req = new \HttpRequest($data['passed_url'], \HttpRequest::METH_HEAD);
-			$req->setOptions(array('redirect' => MAX_REDIRECTS));
+			$req->setOptions(array('redirect' => self::MAX_REDIRECTS));
 			$req->send();
 
 			$resp_code = $req->getResponseCode();
@@ -136,11 +142,14 @@ class Spaz_Url
 			$res['download_content_length'] = $url_info['download_content_length'];
 			
 			$this->cache->add("info_".$url, $res);
-		}
+			$res['cached'] = false;
+		} else {
+    	    $res['cached'] = true;
+    	}
+    	
 		
 		return $res;
-	}
-
+    }
 
 
 	/**
@@ -150,6 +159,7 @@ class Spaz_Url
 	 */
 	public function getTitle($url)
 	{
+	    
 		$url = $this->validate($url);
 
 		if (!$url) {
@@ -160,62 +170,34 @@ class Spaz_Url
 	
 		
 		$res = $this->cache->get("title_".$url);
-		if ($res === false) {
-			curl_setopt($this->curl, CURLOPT_URL, $url);
-			curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($this->curl, CURLOPT_FILETIME, true);
-			curl_setopt($this->curl, CURLOPT_AUTOREFERER, true);
-			curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
-			curl_setopt($this->curl, CURLOPT_MAXREDIRS, 6);
-			curl_setopt($this->curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; en-us) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10");
-			
-			$html = curl_exec($this->curl);
-			
-			$status = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
-			
-			curl_close($this->curl);
-			
-			if ($status == 200 && $html) {
-				
-				$tidy_config = array(
-					'clean' => true,
-					'output-html'=>true,
-					'wrap' => 78,
-					'quiet'=>1
-				);
+        if ($res === false) {
+		    $title = 'Could not retrieve title';
+		    
+		    $req = new \HttpRequest($url, \HttpRequest::METH_GET);
+			$req->setOptions(array('redirect' => self::MAX_REDIRECTS));
+			$req->setHeaders(array(
+			        'Range' => "bytes=0-1000"
+			    )
+			);
+			$req->send();
+		    
+		    $html = $req->getResponseBody();
+		    $status = $req->getResponseCode();	
+		    $type = $req->getResponseHeader('content-type');
+		    
+		    if ($status >= 200 && $status < 300 && $html && $type) {
+                if (preg_match("|<title>([^<]+)</title>|i", $html, $matches)) {
+                    $title = $matches[1];
+                }
+		    }
 
-				$tidy = new tidy;
-				$tidy->parseString($html, $tidy_config);
-				$tidy->cleanRepair();
-
-				$html = $tidy->html()->value;
-
-				// Buffer DOM errors rather than emitting them as warnings
-				$oldSetting = libxml_use_internal_errors(true);
-
-				$dom = new DOMDocument();
-				$dom->loadHTML($html);
-
-				$xpath = new DOMXPath($dom);
-				$titles = $xpath->evaluate('//*[name()="title"]');
-				$title = $titles->item(0)->nodeValue;
-
-				// Clear any existing errors from previous operations
-				libxml_clear_errors();
-
-				// Revert error buffering to its previous setting
-				libxml_use_internal_errors($oldSetting);
-
-
-				
-			} else {
-				$title = 'Could not retrieve title';
-			}
-
-			$res = array('title'=>$title);
+			$res = array('title'=>$title, 'cached'=>false);
 			$this->cache->add("title_".$url, $res);
+		} else {
+		    $res['cached'] = true;
 		}
 
+		
 		
 		return $res;
 	}
