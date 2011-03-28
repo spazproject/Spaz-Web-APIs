@@ -74,7 +74,7 @@ class Action_Resolve_url extends Frapi_Action implements Frapi_Action_Interface
 		
 		try {
 			$url = $this->getParam('url', self::TYPE_STRING);
-			$ur = new Spaz_Urlresolver();
+			$ur = new Spaz_Url();
 			$this->data = $ur->resolve($url);
 			return $this->toArray();
 		} catch(Exception $e) {
