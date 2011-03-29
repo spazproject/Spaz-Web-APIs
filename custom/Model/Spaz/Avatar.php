@@ -50,7 +50,7 @@ class SpazAvatar
             $resp_obj = json_decode($http->getResponseBody());
         }
         
-        if ($resp_obj && isset($resp_obj->profile_image_url)) {
+        if (isset($resp_obj) && $resp_obj && isset($resp_obj->profile_image_url)) {
             $url = $resp_obj->profile_image_url;
             return $url;
         } else {
