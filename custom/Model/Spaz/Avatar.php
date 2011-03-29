@@ -46,7 +46,7 @@ class SpazAvatar
         $http = new HttpRequest($api_url);
         $http->send();
         
-        if ($http->getStatusCode() == 200) {
+        if ($http->getResponseCode() == 200) {
             $resp_obj = json_decode($http->getResponseBody());
         }
         
