@@ -54,13 +54,30 @@
    <name>Get_time</name>
    <enabled>1</enabled>
    <public>1</public>
-   <description></description>
    <route>/time</route>
    <hash>4fb012cb14ef39dd600e8eda39abba566beb8c0a</hash>
    <parameters>
     <parameter>
      <name>tz</name>
      <required>0</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>Avatar</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description></description>
+   <route>/avatar/:service/:userid</route>
+   <hash>6b3886e90fdc939f0d4525409995ece59b7fffe5</hash>
+   <parameters>
+    <parameter>
+     <name>service</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>userid</name>
+     <required>1</required>
     </parameter>
    </parameters>
   </action>

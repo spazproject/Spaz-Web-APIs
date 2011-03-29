@@ -43,5 +43,12 @@
    <description>This error is returned when no image has been supplied back for that URL.</description>
    <hash>fa40e7011e1c80db08e5d52613b06a94b6971467</hash>
   </error>
+  <error>
+   <name>ERROR_RETRIEVING_AVATAR</name>
+   <message>There was an error retrieving that user's avatar</message>
+   <http_code>404</http_code>
+   <description></description>
+   <hash>3a5121fb6ab8e9bf324840d818e31be5e27f8b83</hash>
+  </error>
  </errors>
 </frapi-config>
