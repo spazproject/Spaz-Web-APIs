@@ -2,16 +2,6 @@
 <frapi-config>
  <outputs>
   <output>
-   <name>CLI</name>
-   <enabled>0</enabled>
-   <default>0</default>
-  </output>
-  <output>
-   <name>PHP</name>
-   <enabled>0</enabled>
-   <default>0</default>
-  </output>
-  <output>
    <name>XML</name>
    <enabled>1</enabled>
    <default>0</default>
@@ -22,27 +12,9 @@
    <default>1</default>
   </output>
   <output>
-   <name>PRINTR</name>
-   <enabled>0</enabled>
-   <default>0</default>
-  </output>
-  <output>
-   <name>Custom</name>
-   <enabled>0</enabled>
-   <default>0</default>
-   <hash>3e2f33c0af1733c8e1f4d057c1e00995bdf8ce6e</hash>
-  </output>
-  <output>
-   <name>HTML</name>
-   <enabled>0</enabled>
-   <default>0</default>
-   <hash>62136fc21386854895c93f2c21f6a26105ae1e61</hash>
-  </output>
-  <output>
    <name>JS</name>
    <enabled>1</enabled>
    <default>0</default>
-   <hash>190dd68b2313491366a85ce3c4221f7b4773748b</hash>
   </output>
  </outputs>
 </frapi-config>
