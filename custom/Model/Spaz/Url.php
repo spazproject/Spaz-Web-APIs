@@ -170,7 +170,8 @@ class Spaz_Url
 	
 		
 		$res = $this->cache->get("title_".$url);
-		if ($res === false) {
+        // if ($res === false) {
+        if (true) {
 			$title = 'Could not retrieve title';
 			
 			$req = new \HttpRequest($url, \HttpRequest::METH_GET);
@@ -184,9 +185,11 @@ class Spaz_Url
 			$html = $req->getResponseBody();
 			$status = $req->getResponseCode();	
 			$type = $req->getResponseHeader('content-type');
+
+            // echo "<pre>"; var_dump($html, $status, $type); echo "</pre>";
 			
 			if ($status >= 200 && $status < 300 && $html && $type) {
-				if (preg_match("|<title>([^<]+)</title>|i", $html, $matches)) {
+				if (preg_match("|<title[^>]*>([^<]+)</title>|i", $html, $matches)) {
 					$title = $matches[1];
 				}
 			}
