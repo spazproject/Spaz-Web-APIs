@@ -69,12 +69,10 @@ class Action_Get_time extends Frapi_Action implements Frapi_Action_Interface
             $data['tz'] = $tz;
         }
         
-		$req = new \HttpRequest($url, \HttpRequest::METH_GET);
-		$req->setOptions(array('redirect' => 10));
-		$req->setQueryData($data);
-		
-        // echo "<pre>"; var_dump($req); echo "</pre>";
-		
+        $req = new \HttpRequest($url, \HttpRequest::METH_GET);
+        $req->setOptions(array('redirect' => 10));
+        $req->setQueryData($data);
+        
         $req->send();
         
         $resp_code = $req->getResponseCode();
