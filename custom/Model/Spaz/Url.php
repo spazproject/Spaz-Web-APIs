@@ -67,17 +67,17 @@ class Spaz_Url
 				
 				// retry with GET if HEAD gets a 405
 				if ($resp_code == 405 && $method == HttpRequest::METH_HEAD) {
-					$this->resolve_url($data, HttpRequest::METH_GET);
+					return $this->resolve_url($data, HttpRequest::METH_GET);
 				}
 				
 				$data['error'] = 'http-error';
 				$data['error_message'] = $resp_code;
-				
+
 				// if we redirected once, probably the error code is bogus (because of a hashmark, etc)
 				if ($req->getResponseInfo('redirect_count') > 0) {
 					$data['final_url'] = $req->getResponseInfo('effective_url');
 					$data['redirects'] = $req->getResponseInfo('redirect_count');
-				}
+				}				
 				
 				return $data;
 
