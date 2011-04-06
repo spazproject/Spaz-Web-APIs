@@ -17,7 +17,7 @@ There is also a `tests` directory, where functional tests are done with SimpleTe
 ## Installing ##
 
  * [Install FRAPI](http://frapi.github.com/installing/index.html)
- * Overwrite the existing `FRAPI_PATH/src/frapi/custom` with our `custom` directory
+ * Once FRAPI is installed, follow the steps [here](https://gist.github.com/874869) or overwrite the existing `FRAPI_PATH/src/frapi/custom` with our `custom` directory
  * In theory, it's now working.
 
 ## Participating ##
