@@ -52,33 +52,47 @@ class Spaz_Url
 	}
 	
 	
-	protected function resolve_url($data) {
+	protected function resolve_url($data, $method = HttpRequest::METH_HEAD) {
 		define('MAX_REDIRECTS', 10);
 		define('ONE_HOUR', 1000 * 60);
 
 		if (!isset($data['redirects'])) { $data['redirects'] = 0; }
 
 		try {
-			$req = new \HttpRequest($data['passed_url'], \HttpRequest::METH_HEAD);
+			$req = new \HttpRequest($data['passed_url'], $method);
 			$req->setOptions(array('redirect' => self::MAX_REDIRECTS));
 			$req->send();
 
 			$resp_code = $req->getResponseCode();
 
 			if ($resp_code >= 400 && $resp_code < 600) {
-
+				
+				// retry with GET if HEAD gets a 405
+				if ($resp_code == 405 && $method == HttpRequest::METH_HEAD) {
+					$this->resolve_url($data, HttpRequest::METH_GET);
+				}
+				
 				$data['error'] = 'http-error';
 				$data['error_message'] = $resp_code;
+				
+				// if we redirected once, probably the error code is bogus (because of a hashmark, etc)
+				if ($req->getResponseInfo('redirect_count') > 0) {
+					$data['final_url'] = $req->getResponseInfo('effective_url');
+					$data['redirects'] = $req->getResponseInfo('redirect_count');
+				}
+				
 				return $data;
 
 			} elseif ($resp_code >= 200 && $resp_code < 300) {
-
+				
 				$data['final_url'] = $req->getResponseInfo('effective_url');
 				$data['redirects'] = $req->getResponseInfo('redirect_count');
 				return $data;
 
 			} else {
 
+				$data['final_url'] = $req->getResponseInfo('effective_url');
+				$data['redirects'] = $req->getResponseInfo('redirect_count');
 				$data['error'] = 'Unknown';
 				$data['error_message'] = 'Something didn\'t work, bro';
 				return $data;
