@@ -7,7 +7,7 @@
 class Spaz_Url
 {
 	
-	const MAX_REDIRECTS = 10;
+	const MAX_REDIRECTS = 10;	
 	
 	public $data = array();
 	
@@ -53,8 +53,6 @@ class Spaz_Url
 	
 	
 	protected function resolve_url($data, $method = HttpRequest::METH_HEAD) {
-		define('MAX_REDIRECTS', 10);
-		define('ONE_HOUR', 1000 * 60);
 
 		if (!isset($data['redirects'])) { $data['redirects'] = 0; }
 
