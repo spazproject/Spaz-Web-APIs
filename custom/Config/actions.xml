@@ -67,7 +67,6 @@
    <name>Avatar</name>
    <enabled>1</enabled>
    <public>1</public>
-   <description></description>
    <route>/avatar/:service/:userid</route>
    <hash>6b3886e90fdc939f0d4525409995ece59b7fffe5</hash>
    <parameters>
@@ -77,6 +76,44 @@
     </parameter>
     <parameter>
      <name>userid</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>Unreadsync</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description>Sync unread message status</description>
+   <route>/sync</route>
+   <hash>d31eba41d3c31653ae1b26d18e8a10dd7d266253</hash>
+   <parameters>
+    <parameter>
+     <name>timeline</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>replies</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>key</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>service</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>userid</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>messages</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>client</name>
      <required>1</required>
     </parameter>
    </parameters>

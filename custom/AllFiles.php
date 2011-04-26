@@ -6,5 +6,6 @@ define('FRAPI_CACHE_ADAPTER', 'apc');
 // Use the constant CUSTOM_MODEL to access the custom model directory
 require CUSTOM_MODEL . '/Spaz/Url.php';
 require CUSTOM_MODEL . '/Spaz/Avatar.php';
+require CUSTOM_MODEL . '/Spaz/UnreadSync.php';
 
 require dirname(__FILE__) . DIRECTORY_SEPARATOR.'helpers.php';
