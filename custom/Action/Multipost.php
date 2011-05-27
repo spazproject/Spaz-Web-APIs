@@ -9,7 +9,7 @@
  * @author Frapi <frapi@getfrapi.com>
  * @link /sync
  */
-class Action_Unreadsync extends Frapi_Action implements Frapi_Action_Interface
+class Action_Multipost extends Frapi_Action implements Frapi_Action_Interface
 {
 
     /**
@@ -17,7 +17,7 @@ class Action_Unreadsync extends Frapi_Action implements Frapi_Action_Interface
      *
      * @var An array of required parameters.
      */
-    protected $requiredParams = array('timeline', 'replies', 'messages', 'key', 'service', 'userid', 'client');
+    protected $requiredParams = array('username', 'content', 'services');
 
     /**
      * The data container to use in toArray()
@@ -60,23 +60,7 @@ class Action_Unreadsync extends Frapi_Action implements Frapi_Action_Interface
      */
     public function executeGet()
     {
-        $this->requiredParams = array('service', 'userid');
-        $valid = $this->hasRequiredParameters($this->requiredParams);
-        if ($valid instanceof Frapi_Error) {
-            return $valid;
-        }
-
-        $service = $this->getParam('service', self::TYPE_STRING);
-        $userid = $this->getParam('userid', self::TYPE_STRING);
-
-        $sm = new SpazUnreadSync();
-        $sync = $sm->retrieve($service, $userid);
-
-        if(!$sync) {
-            throw new Frapi_Error('ERROR_RETRIEVING_SYNC');
-        }
-
-        return $sync;
+        throw new Frapi_Error('NOT_IMPLEMENTED');
     }
 
     /**
@@ -92,16 +76,15 @@ class Action_Unreadsync extends Frapi_Action implements Frapi_Action_Interface
         if ($valid instanceof Frapi_Error) {
             return $valid;
         }
-        $syncParams = array();
-        foreach($this->requiredParams as $param) {
-         $syncParams[$param] = $this->getParam($param, self::TYPE_STRING);
-        }
-
-        $sm = new SpazUnreadSync();
-        $sync = $sm->sync($syncParams);
-
-        if (!$sync) {
-            throw new Frapi_Error('ERROR_SAVING_SYNC');
+        $message = $this->getParam('content', self::TYPE_STRING);
+        foreach ($this->getParam('services') as $service => $authData) {
+            $serviceHandlerClass = 'Spaz' . $service;
+            $serviceHandler = new $serviceHandlerClass;
+            try {
+                $data[] = $serviceHandler->send($message, $authData);
+            } catch (Exception $e) {
+                throw new Frapi_Error($e->getMessage());
+            }
         }
 
         return $this->toArray();
