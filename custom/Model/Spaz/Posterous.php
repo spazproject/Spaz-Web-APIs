@@ -74,8 +74,12 @@ class SpazPosterous implements SpazMultiPost_Interface
             'X-Auth-Service-Provider' => 'https://api.twitter.com/1/account/verify_credentials.json',
             'X-Verify-Credentials-Authorization' => $authData,
         );
-        $http = new HttpRequest($this->apiUrl, HttpRequest::METH_POST, array('headers' => $headers));
+        $media = $postData['media'];
+        unset($postData['media']);
+        $http = new HttpRequest($this->apiUrl, HttpRequest::METH_POST);
         $http->setPostFields($postData);
+        $http->setPostFiles($media);
+        $http->setHeaders($headers);
         $http->send();
         return $http->getResponseData();*/
     }
