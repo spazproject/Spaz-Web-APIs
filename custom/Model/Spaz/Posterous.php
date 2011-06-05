@@ -30,7 +30,7 @@ class SpazPosterous implements SpazMultiPost_Interface
      *
      * Allowed metadata:
      *     title (string) - title for post/upload
-     *     media (string|array) - one or more files to post (audio, images, video, docs, etc...)
+     *     media (array) - one or more paths of files to post (audio, images, video, docs, etc...)
      *
      * @param string $message
      * @param array  $metaData
@@ -48,6 +48,10 @@ class SpazPosterous implements SpazMultiPost_Interface
             'sourceLink' => 'http://www.getspaz.com',
         );
         if (!empty($metaData['media']) && is_array($metaData['media'])) {
+            //append @ so curl knows to treat them as files
+            foreach ($metaData['media'] as &$path) {
+                $path = '@' . $path;
+            }
             $postData['media'] = $metaData['media'];
         }
         $headers = array(
