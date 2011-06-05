@@ -19,12 +19,6 @@ class SpazPosterous implements SpazMultiPost_Interface
 		$this->curl = curl_init();
     }
 
-    /*
-     * The Posterous Twitter API lets you upload photos to a Posterous site.
-     * It is used with normal HTTP POST requests. Post data should be formatted
-     * as multipart/form-data. This API is a drop-in replacement for the Twitpic API.
-     *
-     */
     /**
      * Adds a new upload to the user's Posterous account.
      *
