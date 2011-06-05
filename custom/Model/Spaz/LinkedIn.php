@@ -42,13 +42,19 @@ class SpazLinkedIn implements SpazMultiPost_Interface
     {
         $postData = array(
             'comment' => $message,
-            /*'content' => array(
-                'title' => $metaData['title'],
-            ),*/
             'visibility' => array(
                 'code' => ($metaData['visibility']) ? self::VISIBLE_ANYONE : self::VISIBLE_CONNECTIONS,
             ),
         );
+        if (!empty($metaData['title']) && !empty($metaData['url'])) {
+            $postData['content'] = array(
+                'title' => $metaData['title'],
+                'submitted-url' => $metaData['url'],
+            );
+            if (!empty($metaData['image_url'])) {
+                $postData['content']['submitted-image-url'] = $metaData['image_url'];
+            }
+        }
         $curlOpts = array(
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
