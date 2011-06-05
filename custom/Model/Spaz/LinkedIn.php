@@ -1,11 +1,27 @@
 <?php
 
+/**
+ * Implements pass-through posting to LinkedIn API from the Spaz web API.
+ *
+ * @author Brian Fenton
+ */
 class SpazLinkedIn implements SpazMultiPost_Interface
 {
+    /**
+     * Visibility settings for comments
+     */
     const VISIBLE_ANYONE      = 'anyone';
     const VISIBLE_CONNECTIONS = 'connections-only';
 
+    /**
+     * Curl handler. Will eventually replace with pecl_http
+     * @var resource
+     */
     protected $curl;
+    /**
+     * API resource URI for posts on LinkedIn
+     * @var string
+     */
     protected $apiUrl = 'http://api.linkedin.com/v1/people/~/shares';
 
     public function __construct()
@@ -14,27 +30,18 @@ class SpazLinkedIn implements SpazMultiPost_Interface
     }
 
     /**
+     * Adds a new Share to the user's LinkedIn account.
      *
-     * Fields for the XML Body
-     *
-     * Node                 Parent Node         Required? 	Value                           Notes
-     * share                —                   Yes         Child nodes of share            Parent node for all share content
-     * comment              share               Conditional	Text of member's comment. (Similar to deprecated current-status field.)	Post must contain comment and/or (content/title and content/submitted-url). Max length is 700 characters.
-     * content              share               Conditional	Parent node for information on shared document
-     * title                share/content       Conditional	Title of shared document        Post must contain comment and/or (content/title and content/submitted-url). Max length is 200 characters.
-     * submitted-url        share/content       Conditional	URL for shared content          Post must contain comment and/or (content/title and content/submitted-url).
-     * submitted-image-url	share/content       Optional	URL for image of shared content	Invalid without (content/title and content/submitted-url).
-     * description          share/content       Option      Description of shared content	Max length of 400 characters.
-     *
-  <content>
-     <title>Survey: Social networks top hiring tool - San Francisco Business Times</title>
-     <submitted-url>http://sanfrancisco.bizjournals.com/sanfrancisco/stories/2010/06/28/daily34.html</submitted-url>
-     <submitted-image-url>http://images.bizjournals.com/travel/cityscapes/thumbs/sm_sanfrancisco.jpg</submitted-image-url>
-  </content>
+     * Allowed metadata:
+     *     visibility (boolean) - Whether share is visible to everyone. Default: true
+     *     title (string) - must also include url if this is set
+     *     url (string) - URL to share
+     *     image_url (string) - URL of image to share along with title/url
+     *     description (string) - description of share (optional). Max 400 chars.
      *
      * @param string $message
      * @param array  $metaData
-     * @param array  $authData
+     * @param array  $authData Required OAuth credentials
      * @return string
      *
      */
