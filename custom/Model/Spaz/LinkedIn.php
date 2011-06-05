@@ -61,6 +61,9 @@ class SpazLinkedIn implements SpazMultiPost_Interface
             if (!empty($metaData['image_url'])) {
                 $postData['content']['submitted-image-url'] = $metaData['image_url'];
             }
+            if (!empty($metaData['description'])) {
+                $postData['content']['description'] = $metaData['description'];
+            }
         }
         $curlOpts = array(
             CURLOPT_POST => true,
