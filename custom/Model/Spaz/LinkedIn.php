@@ -42,9 +42,9 @@ class SpazLinkedIn implements SpazMultiPost_Interface
     {
         $postData = array(
             'comment' => $message,
-            'content' => array(
+            /*'content' => array(
                 'title' => $metaData['title'],
-            ),
+            ),*/
             'visibility' => array(
                 'code' => ($metaData['visibility']) ? self::VISIBLE_ANYONE : self::VISIBLE_CONNECTIONS,
             ),
