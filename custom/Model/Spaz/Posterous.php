@@ -3,7 +3,15 @@
 class SpazPosterous implements SpazMultiPost_Interface
 {
 
+     /**
+     * Curl handler. Will eventually replace with pecl_http
+     * @var resource
+     */
     protected $curl;
+    /**
+     * API resource URI for uploads on Posterous
+     * @var string
+     */
     protected $apiUrl = 'https://posterous.com/api2/upload.json';
 
     public function __construct()
@@ -16,22 +24,20 @@ class SpazPosterous implements SpazMultiPost_Interface
      * It is used with normal HTTP POST requests. Post data should be formatted
      * as multipart/form-data. This API is a drop-in replacement for the Twitpic API.
      *
-     * The API uses Twitter's OAuth Echo method to authenticate the identity of
-     * a Twitter user.
+     */
+    /**
+     * Adds a new upload to the user's Posterous account.
      *
-     * If the Twitter user is registered on Posterous, it will post to their
-     * default Posterous site. If the user is not on Posterous, we will create a
-     * new site for them. The media parameter can be an array of media. This
-     * includes images, audio, video, and common document formats.
+     * Allowed metadata:
+     *     title (string) - title for post/upload
+     *     media (string|array) - one or more files to post (audio, images, video, docs, etc...)
      *
-     * Fields
-     *     "media" - Optional. File data for single file.
-     *     "media[]" - Optional. File data for multiple file upload. Can be specified multiple times.
+     * @param string $message
+     * @param array  $metaData
+     * @param array  $authData Required OAuth credentials (passed to Twitter)
+     * @return string
      *
-     * Headers
-     * There are two required headers for OAuth Echo:
-     *     X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json
-     *     X-Verify-Credentials-Authorization: Should be the signed OAuth "Authorization" header typically used to call the verify_credentials.json endpoint
+     * @todo add mime type guessing
      */
     public function send($message, $metaData, $authData)
     {
