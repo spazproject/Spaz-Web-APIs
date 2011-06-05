@@ -118,5 +118,23 @@
     </parameter>
    </parameters>
   </action>
+  <action>
+   <name>multi_post</name>
+   <enabled>1</enabled>
+   <public>1</public>
+   <description>Post a new message to multiple services</description>
+   <route>/:userid/messages</route>
+   <hash>d31eba41d3c31653ae1b26d18e8a10dd7d266253</hash>
+   <parameters>
+    <parameter>
+     <name>content</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>services</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
  </actions>
 </frapi-config>
