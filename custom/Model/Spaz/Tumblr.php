@@ -27,7 +27,7 @@ class SpazTumblr implements SpazMultiPost_Interface
         $curlOpts = array(
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POSTFIELDS => $postData,
+            CURLOPT_POSTFIELDS => urlencode(implode('&', $postData)),
             CURLOPT_URL => $this->apiUrl,
         );
         curl_setopt_array($this->curl, $curlOpts);
